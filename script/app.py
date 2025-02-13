@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from typing import Optional
+from datetime import date as cdate
 
 app = FastAPI()
 
@@ -23,6 +25,11 @@ class Task(BaseModel):
     deadline: str
     fixed_time: bool
 
+class Entry(BaseModel):
+    task_id: Optional[int] = None  # Task ID is now optional
+    stress_level: int  # Required
+    date: Optional[cdate] = None 
+
 # Create a new task
 @app.post("/tasks/")
 def create_task(task: Task):
@@ -42,8 +49,37 @@ def get_tasks():
     return {"tasks": tasks}
 
 @app.get("/mood/")
-def log_mood():
-    pass
-@app.get("/journal")
+def log_mood(mood_entry: Entry):
+    # Ensure task exists if task_id is provided
+    if mood_entry.task_id:
+        cur.execute("SELECT id FROM tasks WHERE id = %s", (mood_entry.task_id,))
+        task = cur.fetchone()
+        if not task:
+            return {"error": "Task ID not found!"}
+
+    # Use current date if no date is provided
+    cur.execute(
+        """
+        INSERT INTO mood_tracking (task_id, stress_level, date) 
+        VALUES (%s, %s, COALESCE(%s, CURRENT_DATE)) RETURNING id
+        """,
+        (mood_entry.task_id, mood_entry.stress_level, mood_entry.date)
+    )
+    new_mood_id = cur.fetchone()["id"]
+
+    conn.commit()
+    return {"message": "Mood logged!", "mood_id": new_mood_id}
+
+
+@app.get("/mood/")
 def get_mood():
-    pass
+    cur.execute("SELECT * FROM mood_tracking")
+    journal = cur.fetchall()
+    return{"moods": journal}
+
+@app.get("/mood/{task_id}")
+def get_mood_for_task(task_id: int):
+    cur.execute("SELECT id, stress_level, date, timestamp FROM mood_tracking WHERE task_id = %s", (task_id,))
+    logs = cur.fetchall()
+    return {"task_id": task_id, "mood_logs": logs}
+    

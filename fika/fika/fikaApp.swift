@@ -11,7 +11,7 @@ import SwiftUI
 struct fikaApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TaskInputView()
         }
     }
 }

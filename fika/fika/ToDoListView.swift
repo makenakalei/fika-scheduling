@@ -16,11 +16,14 @@ struct Task: Identifiable {
 
 struct TaskListView: View {
     @State private var tasks: [Task] = [
-        Task(name: "Morning Yoga", category: "Health", startDate: Calendar.current.date(byAdding: .hour, value: 1, to: Date())!),
-        Task(name: "Work Meeting", category: "Work", startDate: Calendar.current.date(byAdding: .hour, value: 3, to: Date())!),
-        Task(name: "Grocery Shopping", category: "Personal", startDate: Calendar.current.date(byAdding: .hour, value: 5, to: Date())!),
-        Task(name: "Gym Workout", category: "Fitness", startDate: Calendar.current.date(byAdding: .hour, value: 7, to: Date())!),
-        Task(name: "Doctor's Appointment", category: "Health", startDate: Calendar.current.date(byAdding: .hour, value: 9, to: Date())!)
+        Task(name: "Morning Yoga", category: "Health", startDate: iso("2025-04-23T07:00:00"), isCompleted: true),
+        Task(name: "Work Meeting", category: "Work", startDate: iso("2025-04-23T07:00:00"), isCompleted: true),
+        Task(name: "Grocery Shopping", category: "Personal", startDate: iso("2025-04-23T07:00:00")),
+        Task(name: "Gym Workout", category: "Fitness", startDate: iso("2025-04-23T07:00:00"), isCompleted: true),
+        Task(name: "Doctor's Appointment", category: "Health", startDate: iso("2025-04-23T07:00:00"), isCompleted: true),
+        Task(name: "Team Meeting", category: "Work", startDate: iso("2025-04-24T09:00:00")),
+            Task(name: "Read AI Paper", category: "Work", startDate: iso("2025-04-24T11:00:00")),
+            Task(name: "Go for a walk", category: "Health", startDate: iso("2025-04-24T11:45:00"))
     ]
     
     @State private var showSurvey = false
@@ -54,6 +57,16 @@ struct TaskListView: View {
                         }
                     }
                 }
+                NavigationLink(destination: ScheduleView()) {
+                    Text("View My Schedule")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.accentColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding([.horizontal, .bottom])
+                }
             }
             .navigationTitle("Tasks")
             .sheet(isPresented: $showSurvey) {
@@ -72,6 +85,7 @@ struct TaskListView: View {
         }
     }
 }
+    
 
 struct TaskRow: View {
     @Binding var task: Task

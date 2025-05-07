@@ -113,13 +113,9 @@ struct UserHomeView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
-                Text("Welcome to Fika!")
+                Text("Welcome!")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                
-                Text("Your Personal Task Scheduler")
-                    .font(.title2)
-                    .foregroundColor(.gray)
                 
                 Spacer()
                 
@@ -149,7 +145,7 @@ struct UserHomeView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(Color.fikaTeal)
                         .foregroundColor(.white)
                         .cornerRadius(10)
                     }
@@ -161,7 +157,7 @@ struct UserHomeView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.green)
+                        .background(Color.fikaTeal.opacity(0.8))
                         .foregroundColor(.white)
                         .cornerRadius(10)
                     }
@@ -206,7 +202,7 @@ struct StatCard: View {
         HStack {
             Image(systemName: icon)
                 .font(.title2)
-                .foregroundColor(.blue)
+                .foregroundColor(.fikaTeal)
                 .frame(width: 40)
             
             VStack(alignment: .leading) {

@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+extension Color {
+    static let fikaTeal = Color(red: 17/255, green: 57/255, blue: 57/255)
+}
+
 struct ContentView: View {
     var body: some View {
         VStack {

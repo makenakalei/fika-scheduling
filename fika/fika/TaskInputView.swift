@@ -96,7 +96,7 @@ struct TaskInputView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(Color.fikaTeal)
                         .cornerRadius(8)
                         .disabled(isLoading || taskName.isEmpty)
                     }

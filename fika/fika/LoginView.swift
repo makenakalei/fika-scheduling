@@ -32,14 +32,14 @@ struct LoginView: View {
                                 .foregroundColor(.white)
                         }
                     }
-                    .listRowBackground(Color.blue)
+                    .listRowBackground(Color.fikaTeal)
                     .disabled(isLoading)
                 }
                 
                 Section {
                     NavigationLink(destination: UserSignUp()) {
                         Text("Don't have an account? Sign Up")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.fikaTeal)
                     }
                 }
             }
@@ -134,7 +134,8 @@ struct LoginView: View {
                         // Store the token and user ID securely
                         UserDefaults.standard.set(token, forKey: "authToken")
                         UserDefaults.standard.set(userId, forKey: "userId")
-                        
+                        // Fetch first name after login
+                        fetchAndStoreFirstName(userId: userId, token: token)
                         // Navigate to main tab view
                         navigateToMain = true
                     } else {
@@ -146,6 +147,19 @@ struct LoginView: View {
                     showingAlert = true
                 }
             }
+        }.resume()
+    }
+    
+    // Add this function to fetch the user's first name after login
+    private func fetchAndStoreFirstName(userId: Int, token: String) {
+        guard let url = URL(string: "http://localhost:8000/user/\(userId)") else { return }
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data,
+                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  let firstName = json["first_name"] as? String else { return }
+            UserDefaults.standard.set(firstName, forKey: "firstName")
         }.resume()
     }
 }

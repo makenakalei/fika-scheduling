@@ -20,9 +20,14 @@ struct WelcomeView: View {
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     
-                    Text("Your Personal Task Scheduler")
-                        .font(.title3)
-                        .foregroundColor(.gray)
+                    VStack(spacing: 0) {
+                        Text("Your")
+                        Text("Mental Health")
+                        Text("and")
+                        Text("Productivity Assistant")
+                    }
+                    .font(.title3)
+                    .foregroundColor(.fikaTeal)
                 }
                 .padding(.top, 50)
                 

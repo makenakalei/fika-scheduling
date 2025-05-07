@@ -61,7 +61,7 @@ struct UserSignUp: View {
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.white)
                     }
-                    .listRowBackground(Color.blue)
+                    .listRowBackground(Color.fikaTeal)
                 }
             }
             .navigationTitle("Create Account")
@@ -204,7 +204,7 @@ struct UserPreferencesView: View {
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
                 }
-                .listRowBackground(Color.blue)
+                .listRowBackground(Color.fikaTeal)
             }
         }
         .navigationTitle("Preferences")
@@ -310,6 +310,7 @@ struct UserPreferencesView: View {
                     // Store the token and user ID immediately
                     UserDefaults.standard.set(userId, forKey: "userId")
                     UserDefaults.standard.set(token, forKey: "authToken")
+                    UserDefaults.standard.set(firstName, forKey: "firstName")
                     
                     // Now complete the signup with preferences
                     let preferencesData: [String: Any] = [

@@ -185,7 +185,7 @@ struct ScheduleView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.green)
+                    .background(Color.fikaTeal)
                     .foregroundColor(.white)
                     .cornerRadius(12)
                     .padding(.horizontal)
@@ -196,7 +196,7 @@ struct ScheduleView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(Color.fikaTeal.opacity(0.8))
                         .foregroundColor(.white)
                         .cornerRadius(12)
                         .padding(.horizontal)
@@ -271,8 +271,8 @@ struct ScheduleView: View {
 extension ScheduleTask {
     var typeColor: Color {
         switch type {
-        case "Fixed": return .blue
-        case "Flexible": return .orange
+        case "Fixed": return .fikaTeal
+        case "Flexible": return .fikaTeal.opacity(0.7)
         case "Break": return .gray
         default: return .black
         }
